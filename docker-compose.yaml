@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  dev_env:
+    build: .
+    container_name: my-persistent-dev-container # A fixed name for easy access
+    volumes:
+      - /YOUR/PREFERRED/DIRECTORY/HERE:/my_desktop # Bind mount your repo folder
+    working_dir: /my_desktop
+    stdin_open: true
+    tty: true
+    # Configure restart policy
+    restart: always # This is the key for auto-restart after machine reboot
+
+# No named volumes are strictly needed for tool installations, as they're in the image.
+# If you have specific data your apps generate and you want to persist, define a volume here:
+# volumes:
+#   app_data: # Example named volume
