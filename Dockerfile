@@ -9,7 +9,7 @@ RUN apt update && apt upgrade -y && \
     apt install -y curl make build-essential libssl-dev zlib1g-dev \
     libbz2-dev libreadline-dev libsqlite3-dev wget llvm \
     libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev git sudo \
-    python3-openssl **unzip** \
+    python3-openssl unzip bash-completion nano vim tree htop procps dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # ----------------------------------------------------------------------
@@ -45,6 +45,18 @@ RUN echo 'export PYENV_ROOT="$HOME/.pyenv"' >> /root/.bashrc && \
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init --path)"' >> /root/.bashrc && \
     echo 'eval "$(pyenv init -)"' >> /root/.bashrc
+
+# Add NVM initialization to bashrc for Node.js access
+RUN echo 'export NVM_DIR="$HOME/.nvm"' >> /root/.bashrc && \
+    echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /root/.bashrc && \
+    echo '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"' >> /root/.bashrc
+
+# Enable bash completion and improve shell experience
+RUN echo 'source /etc/bash_completion' >> /root/.bashrc && \
+    echo 'alias ll="ls -la"' >> /root/.bashrc && \
+    echo 'alias la="ls -A"' >> /root/.bashrc && \
+    echo 'alias l="ls -CF"' >> /root/.bashrc && \
+    echo 'export PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /root/.bashrc
 
 # ----------------------------------------------------------------------
 # Install Terraform
